@@ -1,14 +1,15 @@
 #ifndef Linklist_H
 #define Linklist_H
-
+//#include <malloc.h>
 #include <stdint.h>
-#include "projectStruct.h"
+#include "TCB.h"
 
 
 struct ListElement{
    struct ListElement *next;
    struct ListElement *prev;
-   uint32_t actionTime;
+   uint32_t priority;
+	 Tcb taskTcb;
    void (*callBack)(void* unknown);
    void *args;
 };
@@ -22,7 +23,7 @@ struct Linkedlist{
 }; 
 
 struct Linkedlist *createLinkedList();
-struct ListElement *createLinkedElement(int x);
+struct ListElement *createLinkedElement(int priority, char* name);
 void addList( struct Linkedlist *newList, struct ListElement *newElement);
 
 

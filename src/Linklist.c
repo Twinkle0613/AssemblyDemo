@@ -1,10 +1,12 @@
 //General Library
+
 #include <stdlib.h>
 #include <stdio.h>
-#include <malloc.h>
+#include <string.h>
+//#include <malloc.h>
 //Own Library
 #include "Linklist.h"
-#include "projectStruct.h"
+
 
 struct Linkedlist *createLinkedList(){
   struct Linkedlist *list_NULL = malloc(sizeof(struct Linkedlist));;
@@ -15,11 +17,13 @@ struct Linkedlist *createLinkedList(){
   return list_NULL;
 }
 
-struct ListElement *createLinkedElement(int x){
+struct ListElement *createLinkedElement(int priority, char* name){
   struct ListElement *newptr = malloc(sizeof(struct ListElement));
-  newptr->actionTime = x;
+  newptr->priority = priority;
   newptr->next = NULL;
   newptr->prev = NULL;
+	newptr->taskTcb.name = name;
+	newptr->taskTcb.sp = (uint32_t)&newptr->taskTcb.virtualStack[TASK_STACK_SIZE];
   return newptr;
 }
  

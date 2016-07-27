@@ -10,6 +10,7 @@ void initTcb() {
 	task1Tcb.sp = (uint32_t)&task1Tcb.virtualStack[TASK_STACK_SIZE];
 }
 
+
 // Study the code in AsssemblyModule.s and take note of what
 // how each instruction performs its job. You need that knowledge
 // to do the following:
