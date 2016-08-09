@@ -155,12 +155,43 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
+#include "SaveRegisters.h"
+#include "Linklist.h"
+#include "TCB.h"
+#define dequeue(x) linkListHeadRemove(x)
+#define queue(y,x) addList(y,x)
+#define peepHeadSP(x) (x->head->sp)
+#define getCPUspAddressFromMemory() (tempSP)
+#define getExpireTaskSP temp->sp
+
 void SysTick_Handler(void)
 {
-//	clearSysTickCountFlag();
-  HAL_IncTick();
+	Tcb* temp;
+	temp = dequeue(&tcbRoot); //Remove the current head of the linked-list.
+	storeLRtoMemory();        //get and LR from stack and save into 
+	                          //'lrStorage' memory.
+	if(temp == &taskCPU){     
+	 saveRegsToCPUstack();    //Only the taskCPU store back the registers 
+		                        //inform to CPU stack.
+	 passCPUspAddressToMemory(); 
+   taskCPU.sp = getCPUspAddressFromMemory(); //Copy the address of CPU stack into "taskCPU.sp".
+	}else{
+	  tempSP = getExpireTaskSP;
+		saveRegs(); // Save the registers inform to the allocated memory.
+	}
+		
+   queue(root,temp);          //Add back the task into Linked-list.
+	 tempSP = peepHeadSP(root); //copy the stack pointer of head of root
+	                            //to tempSP.
+	 releaseRegs();             //The CPU SP is point to the tempSP and pop
+                              //the data of registers to the CPU registers.
+	if(temp != &taskCPU){
+	 copyLRfromMemorytoStack(); // Before back to the task, the LR and R4 must be pop into stack except taskCPU.
+	}
+   HAL_IncTick();
 }
 
+//	clearSysTickCountFlag();
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */

@@ -14,12 +14,29 @@
 
 extern int fourBytes;						// Import from AssemblyModule.s
 extern uint16_t twoBytes;				// Import from AssemblyModule.s
+uint32_t lrStorage;
+uint32_t r4Storage;
+
 
 uint32_t variableInC = 0xdeaf;
 uint32_t tempSP;
-struct Linkedlist *root;
-struct ListElement *tcbElement1;
-struct ListElement *tcbElement2;
+LinkedlistTcb* root;
+void taskOne(void);
+void taskTwo(void);
+
+void taskOne(void){
+ 
+   while(1){
+     
+   }
+}
+
+void taskTwo(void){
+  while(1){
+    
+  }
+ 
+}
 void waitForever(void) {
 	volatile int counter = 500000;
 	while(counter--);
@@ -27,43 +44,25 @@ void waitForever(void) {
 	disableSysTickInterrupt();
 }
 
-void TIM2_IRQHandler(){
-	
-
-	
-}
-
-
-void TIM2_init(void){
- HAL_NVIC_EnableIRQ(TIM2_IRQn);
- __HAL_RCC_TIM2_CLK_ENABLE();
- __HAL_RCC_TIM2_RELEASE_RESET();
-	
-}
 
 int main() {
-  int i;
-	i = 2;
-	initTcb();
-  root = createLinkedList();
-  tcbElement1 = createLinkedElement(1,"task1");
-	tcbElement2 = createLinkedElement(2,"task2");
+  int i = 0;
+	root = &tcbRoot;
+  
+	initTask1Tcb(taskOne);  
+  initTask2Tcb(taskTwo);  
+  initTaskCPU();
+  tcbRootInit();
 	
-	addList(root,tcbElement1);
-	addList(root,tcbElement2);
+	addList(root,&taskCPU);
+	addList(root,&task1Tcb);
+  addList(root,&task2Tcb);
+  loadValue();
 	
-	fourBytes = 0xdeadbeef;
-	tempSP = task1Tcb.sp;
-	
-  saveRegs();
 	initSysTick();
-
-
 	while(1) {
-		
+		i++;
 	}
-
-//	return 0;				// Verify that 'variableInC' now contains 0xB19FACE
 }
 
 int cFunc() {
