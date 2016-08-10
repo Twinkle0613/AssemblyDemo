@@ -15,7 +15,7 @@ struct LinkedlistTcb_t{
 void tcbRootInit(void);
 void addList(LinkedlistTcb* newList,Tcb* task);
 Tcb* linkListHeadRemove(LinkedlistTcb* newList);
-
+void saveToCurrentTcbAndGetNextTcb(LinkedlistTcb* list);
 
 extern LinkedlistTcb tcbRoot;
 extern LinkedlistTcb* root;

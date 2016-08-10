@@ -1,5 +1,6 @@
 #include "TCB.h"
 #include <stdio.h>
+
 Tcb task1Tcb;
 Tcb task2Tcb;
 Tcb taskCPU;
@@ -10,6 +11,9 @@ void initTcb() {
 	task1Tcb.name = "task_1";
 	task1Tcb.sp = (uint32_t)&task1Tcb.virtualStack[TASK_STACK_SIZE];
 }
+
+
+
 
 
 // Study the code in AsssemblyModule.s and take note of what
@@ -80,5 +84,4 @@ void initTask2Tcb(void (*funcAddress)){
   context->PC = (uint32_t)funcAddress;
   context->xPSR = 0x01000000;
 }
-
 

@@ -245,8 +245,15 @@ PendSV_Handler  PROC
                 B       .
                 ENDP
 SysTick_Handler PROC
-                EXPORT  SysTick_Handler            [WEAK]
-                B       .
+	              IMPORT saveToCurrentTcbAndGetNextTcb
+	              push {r4-r11,lr}
+	              mov r0,sp
+								ldr r1,=saveToCurrentTcbAndGetNextTcb
+								blx r1
+								pop {r4-r11,lr}
+                bx lr
+								;EXPORT  SysTick_Handler            [WEAK]
+                ;B       .
                 ENDP
 
 Default_Handler PROC

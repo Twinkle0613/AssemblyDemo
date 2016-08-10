@@ -40,3 +40,15 @@ Tcb* linkListHeadRemove(LinkedlistTcb* newList){
 }
 
 
+#define dequeue(x) linkListHeadRemove(x)
+#define queue(y,x) addList(y,x)
+#define peepHeadSP(x) (x->head->sp)
+#define getCPUspAddressFromMemory() (tempSP)
+#define getExpireTaskSP temp->sp
+
+void saveToCurrentTcbAndGetNextTcb(LinkedlistTcb* list){
+		Tcb* temp;
+	  temp = dequeue(list);	
+	  queue(list,temp);
+}
+
