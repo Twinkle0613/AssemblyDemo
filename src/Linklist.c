@@ -6,7 +6,7 @@
 //#include <malloc.h>
 //Own Library
 #include "Linklist.h"
-
+#include "SaveRegisters.h"
 LinkedlistTcb tcbRoot;
 
 void tcbRootInit(void){
@@ -46,9 +46,11 @@ Tcb* linkListHeadRemove(LinkedlistTcb* newList){
 #define getCPUspAddressFromMemory() (tempSP)
 #define getExpireTaskSP temp->sp
 
-void saveToCurrentTcbAndGetNextTcb(LinkedlistTcb* list){
-		Tcb* temp;
+uint32_t saveToCurrentTcbAndGetNextTcb(LinkedlistTcb* list){
+		Tcb* temp;	
 	  temp = dequeue(list);	
+	  copySP(&temp->sp);
 	  queue(list,temp);
+	  return (list->head->sp);
 }
 

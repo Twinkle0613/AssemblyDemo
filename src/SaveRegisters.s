@@ -87,4 +87,13 @@ loadValue       PROC
 								bx lr
 								ENDP
 									
+copySP    		  PROC
+                EXPORT copySP
+                IMPORT tempSP
+								;ldr r1,=tempSP
+								str r12,[r0]
+								bx	lr
+								
+								ENDP	
+									
 								END

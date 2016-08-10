@@ -11,4 +11,5 @@ void passCPUspAddressToMemory(void);
 void storeLRtoMemory(void);
 void copyLRfromMemorytoStack(void);
 void popr4Andlr(void);
+void copySP(uint32_t* sp);
 #endif	// __SAVE_REGISTERS_H__

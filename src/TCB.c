@@ -40,7 +40,7 @@ void initTaskCPU(void){
 void initTask1Tcb(void (*funcAddress)){
   CpuContext* context;
   task1Tcb.name = "task_1";
-	task1Tcb.sp = (uint32_t)&task1Tcb.virtualStack[TASK_STACK_SIZE-64];
+	task1Tcb.sp = (uint32_t)&task1Tcb.virtualStack[TASK_STACK_SIZE-68];
   task1Tcb.next = NULL;
   context = getTopAddressOfStack(&task1Tcb.virtualStack[TASK_STACK_SIZE] , sizeof(CpuContext) );
   context->R4 = 0x44444444;
@@ -51,6 +51,7 @@ void initTask1Tcb(void (*funcAddress)){
 	context->R9 = 0x09090909;
 	context->R10 = 0x10101010;
 	context->R11 = 0x11111111;
+	context->ALR = 0xfffffff9;
 	context->R0 = 0x01010101;
   context->R1 = 0x1111000;
   context->R2 = 0x20202020;
@@ -64,7 +65,7 @@ void initTask1Tcb(void (*funcAddress)){
 void initTask2Tcb(void (*funcAddress)){
   CpuContext* context;
   task2Tcb.name = "task_2";
-	task2Tcb.sp = (uint32_t)&task2Tcb.virtualStack[TASK_STACK_SIZE-64];
+	task2Tcb.sp = (uint32_t)&task2Tcb.virtualStack[TASK_STACK_SIZE-68];
   task2Tcb.next = NULL;
   context = getTopAddressOfStack(&task2Tcb.virtualStack[TASK_STACK_SIZE] , sizeof(CpuContext) );
   context->R4 = 0x44444444;
@@ -75,6 +76,7 @@ void initTask2Tcb(void (*funcAddress)){
   context->R9 = 0xccddccdd;
 	context->R10 = 0x1a1a1a1a;
   context->R11 = 0xabcddddd;
+  context->ALR = 0xfffffff9;
 	context->R0 = 0x01010101;
   context->R1 = 0x1111000;
   context->R2 = 0x20202020;

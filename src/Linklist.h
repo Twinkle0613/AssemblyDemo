@@ -3,7 +3,7 @@
 //#include <malloc.h>
 #include <stdint.h>
 #include "TCB.h"
-
+#include "SaveRegisters.h"
 
 typedef struct LinkedlistTcb_t LinkedlistTcb;
 
@@ -15,7 +15,7 @@ struct LinkedlistTcb_t{
 void tcbRootInit(void);
 void addList(LinkedlistTcb* newList,Tcb* task);
 Tcb* linkListHeadRemove(LinkedlistTcb* newList);
-void saveToCurrentTcbAndGetNextTcb(LinkedlistTcb* list);
+uint32_t saveToCurrentTcbAndGetNextTcb(LinkedlistTcb* list);
 
 extern LinkedlistTcb tcbRoot;
 extern LinkedlistTcb* root;

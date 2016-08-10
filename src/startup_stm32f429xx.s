@@ -246,10 +246,14 @@ PendSV_Handler  PROC
                 ENDP
 SysTick_Handler PROC
 	              IMPORT saveToCurrentTcbAndGetNextTcb
+								IMPORT tcbRoot
+								IMPORT lrStorage
 	              push {r4-r11,lr}
-	              mov r0,sp
-								ldr r1,=saveToCurrentTcbAndGetNextTcb
-								blx r1
+	              mov r12,sp
+								ldr r0,=tcbRoot
+								ldr r2,=saveToCurrentTcbAndGetNextTcb
+								blx r2
+								mov sp,r0
 								pop {r4-r11,lr}
                 bx lr
 								;EXPORT  SysTick_Handler            [WEAK]
